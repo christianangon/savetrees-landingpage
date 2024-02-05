@@ -3,8 +3,7 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
+import Snackbar from '@mui/material/Snackbar';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -16,6 +15,7 @@ import { useNavigate } from 'react-router-dom';
 
 function SignIn() {
   const navigate = useNavigate();
+  const [open, setOpen] = React.useState(false);
   const [formData, setFormData] = React.useState({
     email: '',
     password: '',
@@ -31,7 +31,10 @@ function SignIn() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
+    if (!formData.email.trim() || !formData.password.trim()) {
+      setOpen(true);
+      return;
+    }
     // Store data in localStorage
     localStorage.setItem('loggedIn', 'true');
     localStorage.setItem('email', formData.email);
@@ -43,9 +46,23 @@ function SignIn() {
 
   const defaultTheme = createTheme();
 
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
+
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
+        <Snackbar
+          open={open}
+          autoHideDuration={6000}
+          onClose={handleClose}
+          message="Cannot empty email or password"
+        />
         <CssBaseline />
         <Box
           sx={{
@@ -96,8 +113,8 @@ function SignIn() {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
+                <Link href="/" variant="body2">
+                ← Go home 
                 </Link>
               </Grid>
               <Grid item>

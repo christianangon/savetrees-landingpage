@@ -1,6 +1,29 @@
+/*
+ * @Description: 
+ * @Author: Ian
+ * @Date: 2024-02-05 10:51:29
+ * @LastEditTime: 2024-02-05 12:55:08
+ * @LastEditors: Ian
+ */
 import React from 'react'
-import {SidebarContainer, Icon, CloseIcon, SidebarMenu, SidebarLink, SidebarWrapper,SideBtnWrap,SidebarRoute} from './SidebarElements';
-const Sidebar = ({isOpen, toggle}) => {
+import {SidebarContainer, Icon, CloseIcon, SidebarMenu, SidebarLink, SidebarWrapper,SideBtnWrap} from './SidebarElements';
+import Button from '@mui/material/Button';
+import { useNavigate } from 'react-router-dom';
+const Sidebar = ({isOpen, toggle, isLoggedIn}) => {
+    const navigate = useNavigate()
+    const handleLogin = () => {
+        navigate('/signin');
+      }
+    
+      const handleLogout = () => {
+        // Clear or remove items from localStorage
+        localStorage.setItem('loggedIn', 'false');
+        localStorage.removeItem('email');
+        localStorage.removeItem('password');
+        window.location.reload();
+            console.log("Logout successful");
+        // Optionally, you can redirect to the sign-in page or perform other actions
+      };
     return (
         <SidebarContainer isOpen={isOpen} onClick={toggle}>
             <Icon onClick={toggle}>
@@ -23,9 +46,15 @@ const Sidebar = ({isOpen, toggle}) => {
 
                 </SidebarMenu>
                 <SideBtnWrap>
-                    <SidebarRoute to ='/signin'>
-                        Sign In
-                    </SidebarRoute>
+                    {!isLoggedIn ? (
+                    <Button  color="success" onClick={handleLogin}>
+                    Login
+                </Button>
+                ) : (
+                    <Button  color="success" onClick={handleLogout}>
+                    Logout
+                </Button>
+                )}
                 </SideBtnWrap>
             </SidebarWrapper>
         </SidebarContainer>
