@@ -29,14 +29,17 @@ const Navbar = ({ toggle, isLoggedIn }) => {
     navigate('/signin');
   }
 
+  const navLinks = [
+    {name:"About", path: "about" },
+    {name:"Discover", path: "discover" },
+    {name:"Services", path: "services" },
+  ]
+
   const handleLogout = () => {
-    // Clear or remove items from localStorage
     localStorage.setItem('loggedIn', 'false');
     localStorage.removeItem('email');
     localStorage.removeItem('password');
     window.location.reload();
-        console.log("Logout successful");
-    // Optionally, you can redirect to the sign-in page or perform other actions
   };
 
   return (
@@ -49,39 +52,20 @@ const Navbar = ({ toggle, isLoggedIn }) => {
               <FaBars />
             </MobileIcon>
             <NavMenu>
-              <NavItem>
-                <NavLinks to="about"
-                  smooth={true}
-                  duration={500}
-                  spy={true}
-                  exact='true'
-                  offset={-80}
-                >
-                  About
-                </NavLinks>
-              </NavItem>
-              <NavItem>
-                <NavLinks to="discover"
-                  smooth={true}
-                  duration={500}
-                  spy={true}
-                  exact='true'
-                  offset={-80}
-                >
-                  Discover
-                </NavLinks>
-              </NavItem>
-              <NavItem>
-                <NavLinks to="services"
-                  smooth={true}
-                  duration={500}
-                  spy={true}
-                  exact='true'
-                  offset={-80}
-                >
-                  Services
-                </NavLinks>
-              </NavItem>
+              {navLinks.map(({ name, path }) => (
+                <NavItem key={name}>
+                  <NavLinks
+                    to={path}
+                    smooth={true}
+                    duration={500}
+                    spy={true}
+                    exact='true'
+                    offset={-80}
+                  >
+                    {name}
+                  </NavLinks>
+                </NavItem>
+              ))}
             </NavMenu>
             <NavBtn>
               {!isLoggedIn ? (
