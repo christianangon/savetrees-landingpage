@@ -18,8 +18,8 @@ const InfoSection = ({lightBg, id, imgStart, topLine, lightText, headline, darkT
                                 spy={true}
                                 exact="true"
                                 offset={-80}
-                                primary={true}
-                                dark={false}
+                                // primary={true}
+                                // dark={false}
                                 >{buttonLabel}</Button>
                             </BtnWrap>
                         </TextWrapper>

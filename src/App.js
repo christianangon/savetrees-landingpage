@@ -1,22 +1,19 @@
 
-import react from 'react';
+// import react from 'react';
 import './App.css';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
-import Home from './pages';
-import SigninPage from './pages/signin';
+import routes from './routes'
 
 
 function App() {
   return (
     <Router>
-     
       <Routes>
-        <Route path='/' element={<Home/>} />
-        <Route path="signin" element={<SigninPage/>} />
-      </Routes>
-      
-      
-    </Router>
+      {routes.map((route) => (
+        <Route key={route.route} path={route.route} element={<route.component />} />
+      ))}
+    </Routes>
+  </Router>
   );
 }
 

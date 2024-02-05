@@ -14,11 +14,14 @@ const Home = () => {
         setIsOpen(!isOpen)
     }
 
+    const isLoggedIn = localStorage.getItem('loggedIn') === 'true';
+    const email = localStorage.getItem('email');
+
     return (
         <>
-           <Sidebar isOpen={isOpen} toggle={toggle} />
-           <Navbar toggle={toggle} /> 
-           <HeroSection />
+           <Sidebar isOpen={isOpen} toggle={toggle} isLoggedIn={isLoggedIn}/>
+           <Navbar toggle={toggle} isLoggedIn={isLoggedIn}/> 
+           <HeroSection isLoggedIn={isLoggedIn} email={email} />
            <InfoSection {...homeObjOne}/>
            <InfoSection {...homeObjTwo}/>
            <Services />
